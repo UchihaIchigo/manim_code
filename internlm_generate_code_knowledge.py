@@ -5,15 +5,15 @@ import torch
 import os
 os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 # torch.cuda.set_device(1)  # 选择第二个GPU
-os.environ['CUDA_VISIBLE_DEVICES']='5' #此处选择你要用的GPU序号 0，1，2，3
-os.environ['CUDA_LAUNCH_BLOCKING'] = '5' # 下面老是报错 shape 不一致
-os.environ['TORCH_USE_CUDA_DSA'] = '5'
+os.environ['CUDA_VISIBLE_DEVICES']='1' #此处选择你要用的GPU序号 0，1，2，3
+os.environ['CUDA_LAUNCH_BLOCKING'] = '1' # 下面老是报错 shape 不一致
+os.environ['TORCH_USE_CUDA_DSA'] = '1'
 from transformers import AutoTokenizer, AutoModelForCausalLM
 ckpt_path = "internlm/internlm-xcomposer2-vl-7b"
 # ckpt_path = "internlm/internlm-xcomposer2d5-7b"
 tokenizer = AutoTokenizer.from_pretrained(ckpt_path, trust_remote_code=True, cache_dir="/data/internlm")
 # Set `torch_dtype=torch.float16` to load model in float16, otherwise it will be loaded as float32 and might cause OOM Error.
-model = AutoModelForCausalLM.from_pretrained(ckpt_path, torch_dtype=torch.float16, trust_remote_code=True, cache_dir="/data/internlm").cuda()
+model = AutoModelForCausalLM.from_pretrained(ckpt_path, torch_dtype=torch.float32, trust_remote_code=True, cache_dir="/data/internlm").cuda()
 model = model.eval()
 
 # model_1 = AutoModelForCausalLM.from_pretrained(ckpt_path, device_map="cuda:4", torch_dtype=torch.float16, trust_remote_code=True, cache_dir="/data/internlm").cuda()
@@ -35,7 +35,7 @@ def generate_solution_from_problem(math_problem, model=model, attempt=0, max_ret
                             4.Determine the Type of the Vertex: Since the coefficient of the quadratic term is positive, we know this vertex represents the minimum point of the function, i.e., the lowest point on the graph.
                         数学题：{math_problem}
                         
-                        解题过程：不要输出prompt的内容
+                        解题过程：
                         """
 
     # # 调用OpenAI API生成解题过程
@@ -50,6 +50,8 @@ def generate_solution_from_problem(math_problem, model=model, attempt=0, max_ret
         inputs = tokenizer(prompt, return_tensors="pt").to("cuda")
         output = model.generate(**inputs, max_length=1024)
         response = tokenizer.decode(output[0], skip_special_tokens=True)
+        # 手动去除prompt_knowledge的内容
+        response = response.replace(prompt, "").strip()
     print("---------------------------------------------------------------------------------------------------------")
     print("解题过程：\n",response)
     print("---------------------------------------------------------------------------------------------------------")
@@ -228,6 +230,8 @@ def prompt_question_number(problem, solution, model=model, attempt=0, max_retrie
         inputs = tokenizer(prompt_knowledge, return_tensors="pt").to("cuda")
         output = model.generate(**inputs, max_length=1024)
         response = tokenizer.decode(output[0], skip_special_tokens=True)
+        # 手动去除prompt_knowledge的内容
+        response = response.replace(prompt_knowledge, "").strip()
 
     print("---------------------------------------------------------------------------------------------------------")
     print("选择类别：\n", response)
@@ -410,10 +414,10 @@ def generate_manim_code_from_solution_ch(problem, solution, model=model, attempt
     num = prompt_question_number(problem, solution, model=model, attempt=0, max_retries=3)
     # if "[UNUSED_TOKEN_145]" in num:
     #     num = num.replace("[UNUSED_TOKEN_145]", "")
-    print("num=",num[-20])
+    print("num=",num[0])
     print("num_lenth = ",len(num))
     print("num_type=",type(num))
-    number = int(num[-20])
+    number = int(num[0])
 
     # 生成Manim代码的提示
     prompt = f"""
@@ -445,15 +449,17 @@ def generate_manim_code_from_solution_ch(problem, solution, model=model, attempt
         inputs = tokenizer(prompt, return_tensors="pt").to("cuda")
         output = model.generate(**inputs, max_length=4096)
         response = tokenizer.decode(output[0], skip_special_tokens=True)
+        # 手动去除prompt_knowledge的内容
+        response = response.replace(prompt, "").strip()
     # print(response)
     return response
 
 
-
-# manim_code = generate_manim_code_from_solution_ch(math_problem, solution)
 #
-# # print("解题过程：", solution)
-# # print("Manim代码:", manim_code)
-# print("---------------------------------------------------------------------------------------------------------")
-# print("Manim代码:\n", manim_code)
-# print("---------------------------------------------------------------------------------------------------------")
+manim_code = generate_manim_code_from_solution_ch(math_problem, solution)
+
+# print("解题过程：", solution)
+# print("Manim代码:", manim_code)
+print("---------------------------------------------------------------------------------------------------------")
+print("Manim代码:\n", manim_code)
+print("---------------------------------------------------------------------------------------------------------")
