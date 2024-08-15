@@ -5,7 +5,7 @@ import torch
 import os
 os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 # torch.cuda.set_device(1)  # 选择第二个GPU
-os.environ['CUDA_VISIBLE_DEVICES']='1' #此处选择你要用的GPU序号 0，1，2，3
+os.environ['CUDA_VISIBLE_DEVICES']='3' #此处选择你要用的GPU序号 0，1，2，3
 os.environ['CUDA_LAUNCH_BLOCKING'] = '1' # 下面老是报错 shape 不一致
 os.environ['TORCH_USE_CUDA_DSA'] = '1'
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -194,7 +194,51 @@ def generate_solution_from_problem(math_problem, model=model, attempt=0, max_ret
 
 
 
-math_problem = "已知一次函数y=-2x+5,求其图像关于y轴对称的函数表达式"
+# math_problem = "已知一次函数y=-2x+5,求其图像关于y轴对称的函数表达式"
+
+
+# math_problem = "已知直线经过点(1,2)和(3,0)，求这条直线的解析式"
+# math_problem = "若一次函数 y = kx + b 的函数值 y 随 x 的增大而减小，且图像与 y 轴的负半轴相交。求对 k 和 b 的符号判断"
+# math_problem = "求函数y = -\\frac{3}{4}x + 3的坐标三角形的三条边长。"
+# math_problem = "一次函数 y = kx + b 的图像与 y 轴的交点坐标是什么？"
+# math_problem = "已知一次函数y=kx+b的图像与x轴的交点坐标是什么？"
+# math_problem = "已知一次函数y = -\\frac{3}{4}x + b的坐标三角形周长为16，求三角形的面积。"
+# math_problem = "如果一次函数y = kx + b的图像不经过第二象限,那么k和b的范围是多少"
+# math_problem = "已知一次函数 y = kx + b 经过点 (0, 1) 和 (1, 0)，求该函数的解析式"
+# math_problem = "已知一次函数 y = kx + b 经过点 (0, 4) 和 (1, 2)，求该函数的解析式"
+# math_problem = "如果一次函数y = kx + b的图像与y轴的交点在y轴的负半轴上，求b的符号"
+# math_problem = "已知一次函数y=ax+b,求解x=c时y的值"
+# math_problem = "若直线y=ax+b经过第一、二、三象限，求解a*b的符号"
+# math_problem = "若一次函数y=ax+b与直线y=3x+6垂直，且它们的交点是(-1,3)，求解a和b的值"
+# math_problem = "某城市的人口y与时间t之间存在一次函数关系。已知在2010年人口为50万，在2015年人口为55万，求人口y与时间t的一次函数方程。"
+# math_problem = "已知一次函数y=x+2，将该函数的图像向右平移3个单位，再向上平移2个单位，求平移后的函数表达式。"
+# math_problem = "已知一次函数y=-3x+5，x的取值范围是[-2.3]时，函数的值域。"
+# math_problem = "已知两个一次函数f(x)=3x-4和g(x)=2x+1，求组合函数h(x)=f(g(x))的表达式，并求当h(x)=10时x的值。"
+# math_problem = "已知一次函数y=-2x+5,求其图像关于y轴对称的函数表达式。"
+# math_problem = "已知一次函数y=kx+3的图像与直线y=2x+1平行，且它们的交点在y轴上的纵坐标为-3,求k的值。"
+# math_problem = "已知一次函数f(x)=mx+c和g(x)=nx+d,且当x=1时，f(x)=g(x)，当x=2时，f(x)-g(x)=4.求m、n、c、d之间的关系。"
+# math_problem = "已知一次函数y＝kx+b（k＜0）的图象经过点（x1，5）、（x2，﹣2），求x1和x2的大小关系"
+# math_problem = "若点A（m，n）在y=2/3x+b的图象上，且2m﹣3n＞6，求b的取值范围。"
+# math_problem = "已知直线y＝kx+b过点（2，2），并与x轴负半轴相交，若m＝3k+2b，求m的取值范围为。"
+# math_problem = "已知函数y＝3x+1的图象经过点A（2/3，m），求关于x的不等式3x＜m﹣1的解集。"
+# math_problem = "已知点（-1，y1），（4，y2）在一次函数y=3x-2的图象上，求y1，y2，0的大小关系。"
+# math_problem = "已知一次函数y=(k-2)x+k不经过第三象限，求k的取值范围。"
+# math_problem = "将一次函数y=kx+2的图象向下平移3个单位长度后经过点（-4，3），求k的值。"
+# math_problem = "求函数y=(x^(1/2))/(x-2)中自变量x的取值范围。"
+# math_problem = "已知点A(m,y1), B(m+1, y2)，都在直线y=2x-3上，求y2-y1的值。"
+# math_problem = "若点P(a,b)在直线y=2x-1上，求代数式8-4a+2b的值。"
+# math_problem = "一次函数y=x+m+2的图象不经过第二象限，求m的取值范围。"
+# math_problem = "若一次函数y＝kx+2的图象，y随x的增大而增大，并与x轴、y轴所围成的三角形的面积为2，求k的值。"
+# math_problem = "在平面直角坐标系中，已知直线y=kx+b与直线y=2x+2022平行，且与y轴交于点M(0,4)，与x轴的交点为N，求三角形MNO的面积。"
+# math_problem = "把直线y=-x-3向上平移m个单位后，与直线y=2x+4的交点在第二象限，求m的取值范围。"
+# math_problem = "无论m取任何实数，一次函数y=（m﹣1）x+m﹣3必过一定点，求定点的坐标。"
+# math_problem = "已知一次函数y=kx+2k+3的图象不经过第三象限，求k的取值范围。"
+# math_problem = "已知方程|x|=ax+1有一个负根但没有正根，求a的取值范围。"
+# math_problem = "直线y＝kx﹣2与直线y＝x﹣1（1≤x≤4）有交点，求k的取值范围。"
+# math_problem = "将直线先向上平移2个单位，再向右平移2个单位得到的直线l对应的一次函数的表达式为。"
+math_problem = "问已知一次函数y=kx+b+1且k不等于0的图像经过第一、二、四象限，且过点（3，-2），求b关于k的代数表达式，以及k的取值范围是。"
+
+
 solution = generate_solution_from_problem(math_problem)
 
 
@@ -219,6 +263,7 @@ def prompt_question_number(problem, solution, model=model, attempt=0, max_retrie
                      8.无需画图分析的代数计算题目
 
                      数学题目：{problem}
+                     
             """
 
     # response = openai.ChatCompletion.create(
@@ -356,11 +401,279 @@ p8 = """
 
 
 """
+
+# p1 = """
+#          According to the following questions and problem-solving process, generate the corresponding Manim code to display the mathematical function image and problem-solving steps in this problem-solving process. The display is in the following order:
+# 1. Each video is divided into two scenes, the first scene is to display the question, and the second scene is to display the analysis.
+# 2. The goal of the first scene is to display the question information. The text cannot exceed the boundary and the text cannot overlap.
+# 3. The second scene requires a step-by-step display of the problem-solving process:
+# 3.1 First, display the drawing content on the left half of the canvas. The drawing is consistent with the meaning of the question, and the elements are complete. The image content cannot exceed the boundary.
+# 3.2 Secondly, display the text explanation content on the right half of the canvas. It is required that it cannot overlap and the text content cannot exceed the boundary.
+# 4. The text and image cannot overlap
+#
+# Special requirements: It is necessary to display the specific mathematical characteristics of the quadrant (first quadrant, second quadrant, third quadrant, fourth quadrant)
+# It is necessary to mark the position of the point in the drawing
+#
+# """
+#
+# p2 = """
+#          According to the following questions and problem-solving process, generate the corresponding Manim code to display the mathematical function image and problem-solving steps in this problem-solving process. The display is in the following order:
+# 1. Each video is divided into two scenes, the first scene is to display the question, and the second scene is to display the analysis.
+# 2. The goal of the first scene is to display the question information. The text cannot exceed the boundary and the text cannot overlap.
+# 3. The second scene requires a step-by-step display of the problem-solving process:
+# 3.1 First, display the drawing content on the left half of the canvas. The drawing is consistent with the meaning of the question, and the elements are complete. The image content cannot exceed the boundary.
+# 3.2 Secondly, display the text explanation content on the right half of the canvas. It is required that it cannot overlap and the text content cannot exceed the boundary.
+# 4. The text and image cannot overlap
+#
+# Special requirements: Display the position and value of the point in the quadrant
+# Display the distance between the point and the two axes
+#
+#
+# """
+#
+# p3 = """
+#          According to the following questions and problem-solving process, generate the corresponding Manim code to display the mathematical function image and problem-solving steps in this problem-solving process. The display is in the following order:
+# 1. Each video is divided into two scenes, the first scene is to display the question, and the second scene is to display the analysis.
+# 2. The goal of the first scene is to display the question information. The text cannot exceed the boundary and the text cannot overlap.
+# 3. The second scene requires a step-by-step display of the problem-solving process:
+# 3.1 First, display the drawing content on the left half of the canvas. The drawing is consistent with the meaning of the question, and the elements are complete. The image content cannot exceed the boundary.
+# 3.2 Secondly, display the text explanation content on the right half of the canvas. It is required that it cannot overlap and the text content cannot exceed the boundary.
+# 4. The text and image cannot overlap
+#
+# Special requirements: Display the values of each vertex of the geometric figure, mark the position and name of each vertex, and mark the values before and after the vertex changes
+#
+#
+# """
+#
+# p4 = """
+#          According to the following questions and problem-solving process, generate the corresponding Manim code to display the mathematical function image and problem-solving steps in this problem-solving process. The display is in the following order:
+# 1. Each video is divided into two scenes, the first scene is to display the question, and the second scene is to display the analysis.
+# 2. The goal of the first scene is to display the question information. The text cannot exceed the boundary and the text cannot overlap.
+# 3. The second scene requires a step-by-step display of the problem-solving process:
+# 3.1 First, display the drawing content on the left half of the canvas. The drawing is consistent with the meaning of the question, and the elements are complete. The image content cannot exceed the boundary.
+# 3.2 Secondly, display the text explanation content on the right half of the canvas. It is required that it cannot overlap and the text content cannot exceed the boundary.
+# 4. The text and image cannot overlap
+#
+# Special requirements: Display the values of each vertex of the geometric figure, mark the position and name of each vertex, and mark the values before and after the vertex changes
+#
+#
+# """
+#
+# p5 = """
+#          According to the following questions and problem-solving process, generate the corresponding Manim code to display the mathematical function image and problem-solving steps in this problem-solving process. The display is in the following order:
+# 1. Each video is divided into two scenes, the first scene is to display the question, and the second scene is to display the analysis.
+# 2. The goal of the first scene is to display the question information. The text cannot exceed the boundary and the text cannot overlap.
+# 3. The second scene requires a step-by-step display of the problem-solving process:
+# 3.1 First, display the drawing content on the left half of the canvas. The drawing is consistent with the meaning of the question, and the elements are complete. The image content cannot exceed the boundary.
+# 3.2 Secondly, display the text explanation content on the right half of the canvas. It is required that it cannot overlap and the text content cannot exceed the boundary.
+# 4. The text and image cannot overlap
+# Special requirements: display the coordinate axis and unit, display the straight line equation information, display the straight line and the transformation of the straight line
+#     """
+#
+# p6 = """
+#          According to the following questions and problem-solving process, generate the corresponding Manim code to display the mathematical function image and problem-solving steps in this problem-solving process. The display is in the following order:
+# 1. Each video is divided into two scenes, the first scene is to display the question, and the second scene is to display the analysis.
+# 2. The goal of the first scene is to display the question information. The text cannot exceed the boundary and the text cannot overlap.
+# 3. The second scene requires a step-by-step display of the problem-solving process:
+# 3.1 First, display the drawing content on the left half of the canvas. The drawing is consistent with the meaning of the question, and the elements are complete. The image content cannot exceed the boundary.
+# 3.2 Secondly, display the text explanation content on the right half of the canvas. It is required that it cannot overlap and the text content cannot exceed the boundary.
+# 4. The text and the image cannot overlap
+#
+# Special requirements: Display the intersection of the function image and the coordinate axis to confirm the solution of the equation system. The horizontal coordinate of the intersection is the x value, and the vertical coordinate of the intersection is the y value
+#
+#
+# """
+#
+# p7 = """
+#          According to the following questions and problem-solving process, generate the corresponding Manim code to display the mathematical function image and problem-solving steps in this problem-solving process. The display is in the following order:
+# 1. Each video is divided into two scenes, the first scene is to display the question, and the second scene is to display the analysis.
+# 2. The goal of the first scene is to display the question information. The text cannot exceed the boundary and the text cannot overlap.
+# 3. The second scene requires a step-by-step display of the problem-solving process:
+# 3.1 First, display the drawing content on the left half of the canvas. The drawing is in line with the meaning of the question, and the elements are complete. The image content cannot exceed the boundary.
+# 3.2 Secondly, display the text explanation content on the right half of the canvas. It is required that it cannot overlap and the text content cannot exceed the boundary.
+# 4. The text and image cannot overlap
+#
+# Special requirements: Display the rectangular coordinate system and the corresponding units and values
+# Display the straight line of the linear function (usually 2 straight lines)
+# Combine the meaning of the question to highlight the image area
+#
+#
+# """
+#
+# p8 = """
+#          According to the following questions and problem-solving process, generate the corresponding Manim code to display the mathematical function image and problem-solving steps in this problem-solving process. The display is in the following order:
+# 1. Each video is divided into two scenes, the first scene is to display the question, and the second scene is to display the analysis.
+# 2. The goal of the first scene is to display the question information. The text cannot exceed the boundary and the text cannot overlap.
+# 3. The second scene requires a step-by-step display of the problem-solving process:
+# 3.1 First, display the drawing content on the left half of the canvas. The drawing is consistent with the meaning of the question, and the elements are complete. The image content cannot exceed the boundary.
+# 3.2 Secondly, display the text explanation content on the right half of the canvas. It is required that it cannot overlap and the text content cannot exceed the boundary.
+# 4. The text and image cannot overlap
+#
+# Special requirements: For application questions, questions mainly based on algebraic calculations, and questions of concept and definition understanding, you can not draw images, only display text interpretation
+#
+#
+#
+# """
 prompt_config = [p1, p2, p3, p4, p5, p6, p7, p8]
 # print(prompt_config)
 
 
+# example_manim = """
+# from manim import *
+# class SolveCompositeFunction(Scene):
+#     def construct(self):
+#         # 创建标题文本
+#         title1 = Text("已知两个一次函数f(x)=3x-4和g(x)=2x+1，", font_size=24)
+#         title2 = Text("求组合函数h(x)=f(g(x))的表达式，并求当h(x)=10时x的值。", font_size=24)
+#         title_group = VGroup(title1, title2).arrange(DOWN, center=False).move_to(ORIGIN)
+#
+#         # 播放标题显示动画
+#         self.play(Write(title_group))
+#         self.wait(2)
+#         self.play(FadeOut(title_group))
+#
+#         axes = Axes(
+#           x_range=[***, ***, ***],
+#           y_range=[***, ***, ***],  # 调整比例
+#           x_length=10,
+#           y_length=10,
+#             axis_config={"color": WHITE},
+#         ).scale(0.5).to_edge(LEFT, buff=0.5)
+#         labels = axes.get_axis_labels(x_label="x", y_label="y")
+#         self.play(Create(axes), Write(labels))
+#
+#         f_line = axes.plot(lambda x: 3*x-4, color=BLUE)
+#         g_line = axes.plot(lambda x: 2*x+1, color=RED)
+#         f_label = axes.get_graph_label(f_line, label='y=3x-4', x_val=1)
+#         g_label = axes.get_graph_label(g_line, label='g(x)', x_val=1)
+#         fg_line = axes.plot(lambda x: 6*x-1, color=YELLOW)
+#         fg_label = axes.get_graph_label(fg_line, label='f(g(x))', x_val=1)
+#         #播放创建坐标轴、标签和图像的动画
+#
+#         self.play(Create(f_line), Write(f_label))
+#         self.play(Create(g_line), Write(g_label))
+#         self.play(Create(fg_line), Write(fg_label))
+#
+#
+#         #[supplement]
+#
+#
+#         # 创建解释文本
+#         explanation = VGroup(
+#             Text("1. f(x)=3x-4函数如蓝线所示:", font_size=24),
+#             Text("2. g(x)=2x+1函数如红线所示", font_size=24),
+#             Text("3. h(x)=f(g(x))=6x-1函数如黄线所示", font_size=24),
+#             Text("4. 求当h(x)=10时：", font_size=24),
+#             MathTex("6x-1 = 10 \\Rightarrow x=\\frac{11}{6}", font_size=24),
+#         ).arrange(DOWN, aligned_edge=LEFT).scale(0.7).to_edge(RIGHT, buff=0.5)
+#
+#         # 逐步显示解释文本
+#         for step in explanation:
+#             self.play(Write(step))
+#             self.wait(2)
+#         self.wait(3)
+# """
+
+
+# example_manim = """
+# from manim import *
+# class SolveCompositeFunction(Scene):
+#     def construct(self):
+#         # 创建标题文本
+#         title1 = Text("已知两个一次函数f(x)=3x-4和g(x)=2x+1，", font_size=24)
+#         title2 = Text("求组合函数h(x)=f(g(x))的表达式，并求当h(x)=10时x的值。", font_size=24)
+#         title_group = VGroup(title1, title2).arrange(DOWN, center=False).move_to(ORIGIN)
+#
+#         # 播放标题显示动画
+#         self.play(Write(title_group))
+#         self.wait(2)
+#         self.play(FadeOut(title_group))
+#
+#         axes = Axes(
+#           x_range=[***, ***, ***],
+#           y_range=[***, ***, ***],  # 调整比例
+#           x_length=10,
+#           y_length=10,
+#             axis_config={"color": WHITE},
+#         ).scale(0.5).to_edge(LEFT, buff=0.5)
+#         labels = axes.get_axis_labels(x_label="x", y_label="y")
+#         self.play(Create(axes), Write(labels))
+#
+#
+#         #根据解题需求选择合适的<>内容并生成代码，可以不选择生成
+#         <
+#         创建直线
+#         f_line = axes.plot(lambda x: 3*x-4, color=BLUE)
+#         g_line = axes.plot(lambda x: 2*x+1, color=RED)
+#         f_label = axes.get_graph_label(f_line, label='y=3x-4', x_val=1)
+#         g_label = axes.get_graph_label(g_line, label='g(x)', x_val=1)
+#         fg_line = axes.plot(lambda x: 6*x-1, color=YELLOW)
+#         fg_label = axes.get_graph_label(fg_line, label='f(g(x))', x_val=1)
+#         self.play(Create(f_line), Write(f_label))
+#         self.play(Create(g_line), Write(g_label))
+#         self.play(Create(fg_line), Write(fg_label))
+#         >
+#
+#         <
+#         创建直线的交点，对未知数取适当的数
+#         point_1 = Dot(axes.coords_to_point(***, ***), color=RED)
+#         point_2 = Dot(axes.coords_to_point(***, ***), color=RED)
+#         label_1 = MathTex("(***, ***)").move_to(axes.coords_to_point(***, ***) + UP * 0.5 + LEFT * 0.5)
+#         label_2 = MathTex("(***, ***)").move_to(axes.coords_to_point(***, ***) + DOWN * 0.5 + LEFT * 0.5)
+#         point = VGroup(point_1, point_2, label_1, label_2)
+#         self.play(Create(point))
+#         >
+#
+#         <
+#         创建图形（原理是把点连成线）
+#         point_origin = Dot(axes.coords_to_point(***, ***), color=RED)
+#             label_origin = MathTex("***").next_to(point_origin, DR, buff=0.1)
+#             point_x_intercept = Dot(axes.coords_to_point(***, ***), color=RED)
+#             label_x_intercept = MathTex("A(***, ***)").next_to(point_x_intercept, DL, buff=0.1)
+#             point_y_intercept = Dot(axes.coords_to_point(***, ***), color=RED)
+#             label_y_intercept = MathTex("B(***, ***)").next_to(point_y_intercept, UR, buff=0.1)
+#             points = VGroup(point_origin, label_origin, point_x_intercept, label_x_intercept, point_y_intercept,
+#                             label_y_intercept)
+#             triangle = Polygon(
+#                 axes.coords_to_point(***, ***),
+#                 axes.coords_to_point(***, ***),
+#                 axes.coords_to_point(***, ***),
+#                 color=YELLOW
+#             )
+#             self.play(Create(points))
+#             self.play(Create(triangle))
+#             ]
+#         >
+#
+#
+#         # 创建解释文本
+#         explanation = VGroup(
+#             Text("1. f(x)=3x-4函数如蓝线所示:", font_size=24),
+#             Text("2. g(x)=2x+1函数如红线所示", font_size=24),
+#             Text("3. h(x)=f(g(x))=6x-1函数如黄线所示", font_size=24),
+#             Text("4. 求当h(x)=10时：", font_size=24),
+#             MathTex("6x-1 = 10 \\Rightarrow x=\\frac{11}{6}", font_size=24),
+#         ).arrange(DOWN, aligned_edge=LEFT).scale(0.7).to_edge(RIGHT, buff=0.5)
+#         for step in explanation:
+#             self.play(Write(step))
+#             self.wait(2)
+#         self.wait(3)
+# """
+
+
 example_manim = """
+示例题目：
+已知两个一次函数f(x)=3x-4和g(x)=2x+1，求组合函数h(x)=f(g(x))的表达式，并求当h(x)=10时x的值。
+
+示例解题过程：
+1. f(x)=3x-4函数如蓝线所示:
+2. g(x)=2x+1函数如红线所示
+3. 两条直线的交点为(5, 11)
+4. h(x)=f(g(x))=6x-1函数如黄线所示"
+5. 求当h(x)=10时：
+   6x-1 = 10 所以 x=11/6
+
+示例代码：
 from manim import *
 class SolveCompositeFunction(Scene):
     def construct(self):
@@ -374,26 +687,31 @@ class SolveCompositeFunction(Scene):
         self.play(FadeOut(title_group))
 
         axes = Axes(
-          x_range=[***, ***, ***], 
-          y_range=[***, ***, ***],  # 调整比例
-          x_length=10,
-          y_length=10,
-            axis_config={"color": WHITE},
+          x_range=[-2, 4, 1], y_range=[-6, 18, 1]
         ).scale(0.5).to_edge(LEFT, buff=0.5)
         labels = axes.get_axis_labels(x_label="x", y_label="y")
-        self.play(Create(axes), Write(labels))
         
-        f_line = axes.plot(lambda x: 3*x-4, color=BLUE)
-        g_line = axes.plot(lambda x: 2*x+1, color=RED)
-        f_label = axes.get_graph_label(f_line, label='y=3x-4', x_val=1)
-        g_label = axes.get_graph_label(g_line, label='g(x)', x_val=1)
-        fg_line = axes.plot(lambda x: 6*x-1, color=YELLOW)
-        fg_label = axes.get_graph_label(fg_line, label='f(g(x))', x_val=1)
+        #创建解析过程中出现的每一个点
+        point_1 = Dot(axes.coords_to_point(5, 11), color=RED)
+        label_1 = MathTex("(5, 11)").move_to(axes.coords_to_point(5, 11) + UP * 0.5 + LEFT * 0.5)
+        point = VGroup(point_1, label_1)
+        self.play(Create(point))
+        
+        #创建解析过程中出现的每一条直线
+        f_graph = axes.plot(lambda x: 3*x-4, color=BLUE)
+        g_graph = axes.plot(lambda x: 2*x+1, color=RED)
+        f_label = axes.get_graph_label(f_graph, label='f(x)')
+        g_label = axes.get_graph_label(g_graph, label='g(x)')
+        fg_graph = axes.plot(lambda x: 6*x-1, color=YELLOW)
+        fg_label = axes.get_graph_label(fg_graph, label='f(g(x))')
         # 播放创建坐标轴、标签和图像的动画
+        self.play(Create(axes), Write(labels))
+        self.play(Create(f_graph), Write(f_label))
+        self.play(Create(g_graph), Write(g_label))
+        self.play(Create(fg_graph), Write(fg_label))
         
-        self.play(Create(f_line), Write(f_label))
-        self.play(Create(g_line), Write(g_label))
-        self.play(Create(fg_line), Write(fg_label))
+        
+        
         # 创建解释文本
         explanation = VGroup(
             Text("1. f(x)=3x-4函数如蓝线所示:", font_size=24),
@@ -410,6 +728,84 @@ class SolveCompositeFunction(Scene):
         self.wait(3)
 """
 
+# example_manim = """
+# from manim import *
+# class SolveCompositeFunction(Scene):
+#     def construct(self):
+#         #In the first scene, create the mathematics question, using commas and periods to separate the lines that appear
+#         title1 = Text("<mathematics question>，", font_size=24)
+#         title2 = Text("<Display the text in math problems line by line>。", font_size=24)
+#         title_group = VGroup(title1, title2).arrange(DOWN, center=False).move_to(ORIGIN)
+#         self.play(Write(title_group))
+#         self.wait(2)
+#         self.play(FadeOut(title_group))
+#
+#         #Act 2: Create problem-solving animation and text
+#         #To create the axis, you must have
+#         axes = Axes(
+#           x_range=[***, ***, ***],
+#           y_range=[***, ***, ***],
+#           x_length=10,
+#           y_length=10,
+#             axis_config={"color": WHITE},
+#         ).scale(0.5).to_edge(LEFT, buff=0.5)
+#         labels = axes.get_axis_labels(x_label="x", y_label="y")
+#         self.play(Create(axes), Write(labels))
+#
+#         #Please select the appropriate annotated code below to assist in the generation of animation (note that each annotated code can be referenced up to 4 times. If it is not necessary, you can choose not to create it)：
+#         [
+#         <Create Line>
+#         f_line = axes.plot(lambda x: a*x-4, color=BLUE)
+#         g_line = axes.plot(lambda x: <Function Expression>, color=RED)
+#         f_label = axes.get_graph_label(f_line, label='y=3x-4', x_val=1)
+#         g_label = axes.get_graph_label(g_line, label='<Function Expression>', x_val=1)
+#         self.play(Create(f_line), Write(f_label))
+#         self.play(Create(g_line), Write(g_label))
+#
+#         <Create Intersection of straight lines, take appropriate number for unknown number>
+#         point_1 = Dot(axes.coords_to_point(***, ***), color=RED)
+#         point_2 = Dot(axes.coords_to_point(***, ***), color=RED)
+#         label_1 = MathTex("(***, ***)").move_to(axes.coords_to_point(***, ***) + UP * 0.5 + LEFT * 0.5)
+#         label_2 = MathTex("(***, ***)").move_to(axes.coords_to_point(***, ***) + DOWN * 0.5 + LEFT * 0.5)
+#         point = VGroup(point_1, point_2, label_1, label_2)
+#         self.play(Create(point))
+#
+#         <Create graphics (the principle is to connect points into lines)>
+#         point_origin = Dot(axes.coords_to_point(***, ***), color=RED)
+#             label_origin = MathTex("***").next_to(point_origin, DR, buff=0.1)
+#             point_x_intercept = Dot(axes.coords_to_point(***, ***), color=RED)
+#             label_x_intercept = MathTex("A(***, ***)").next_to(point_x_intercept, DL, buff=0.1)
+#             point_y_intercept = Dot(axes.coords_to_point(***, ***), color=RED)
+#             label_y_intercept = MathTex("B(***, ***)").next_to(point_y_intercept, UR, buff=0.1)
+#             points = VGroup(point_origin, label_origin, point_x_intercept, label_x_intercept, point_y_intercept,
+#                             label_y_intercept)
+#             triangle = Polygon(
+#                 axes.coords_to_point(***, ***),
+#                 axes.coords_to_point(***, ***),
+#                 axes.coords_to_point(***, ***),
+#                 color=YELLOW
+#             )
+#             self.play(Create(points))
+#             self.play(Create(triangle))
+#             ]
+#
+#
+#         #Create the explanation text. This step must be filled in with the problem-solving process <Display the text of the problem-solving process line by line>. It can only appear once, and the number of lines displayed is divided by commas and periods.
+#         #A maximum of 30 Chinese characters appear in each line
+#         explanation = VGroup(
+#             Text("1. <Display the text in the problem-solving process line by line>", font_size=24),
+#             Text("2. <Display the text in the problem-solving process line by line>", font_size=24),
+#             Text("3. <Display the text in the problem-solving process line by line>", font_size=24),
+#             MathTex("<If there is a formula, it will be shown on the right：>6x-1 = 10 \\Rightarrow x=\\frac{11}{6}", font_size=24),
+#         ).arrange(DOWN, aligned_edge=LEFT).scale(0.7).to_edge(RIGHT, buff=0.5)
+#
+#         for step in explanation:
+#             self.play(Write(step))
+#             self.wait(2)
+#         self.wait(3)
+# """
+
+
 def generate_manim_code_from_solution_ch(problem, solution, model=model, attempt=0, max_retries=3, prompt_config=prompt_config, example_manim=example_manim):
     num = prompt_question_number(problem, solution, model=model, attempt=0, max_retries=3)
     # if "[UNUSED_TOKEN_145]" in num:
@@ -419,21 +815,78 @@ def generate_manim_code_from_solution_ch(problem, solution, model=model, attempt
     print("num_type=",type(num))
     number = int(num[0])
 
+    manim_supplement = """
+    你可以从以下代码中挑选合适的代码对原本生成的[supplement]内容进行补充：
+            ### 1. 绘制相交的点（选择性生成）
+            point_1 = Dot(axes.coords_to_point(***, ***), color=RED)
+            point_2 = Dot(axes.coords_to_point(***, ***), color=RED)
+            label_1 = MathTex("(***, ***)").move_to(axes.coords_to_point(***, ***) + UP * 0.5 + LEFT * 0.5)  
+            label_2 = MathTex("(***, ***)").move_to(axes.coords_to_point(***, ***) + DOWN * 0.5 + LEFT * 0.5)  
+            point = VGroup(point_1, point_2, label_1, label_2)
+            self.play(Create(point))
+
+            ### 2. 绘制相交的点，绘制几何图形（选择性生成）
+            point_origin = Dot(axes.coords_to_point(***, ***), color=RED)
+            label_origin = MathTex("***").next_to(point_origin, DR, buff=0.1)
+            point_x_intercept = Dot(axes.coords_to_point(***, ***), color=RED)
+            label_x_intercept = MathTex("A(***, ***)").next_to(point_x_intercept, DL, buff=0.1)
+            point_y_intercept = Dot(axes.coords_to_point(***, ***), color=RED)
+            label_y_intercept = MathTex("B(***, ***)").next_to(point_y_intercept, UR, buff=0.1)
+            points = VGroup(point_origin, label_origin, point_x_intercept, label_x_intercept, point_y_intercept,
+                            label_y_intercept)
+            triangle = Polygon(
+                axes.coords_to_point(***, ***),
+                axes.coords_to_point(***, ***),
+                axes.coords_to_point(***, ***),
+                color=YELLOW
+            )
+            self.play(Create(points))
+            self.play(Create(triangle))
+            
+            从下面选择合适的补充代码并替换[supplement]：{manim_supplement}
+    """
+
     # 生成Manim代码的提示
     prompt = f"""
+    你是一个给学生讲解解题过程的数学老师。
+    接下来你需要根据给定的数学题目和解题过程，以视频化形式为学生展开生动的解析，解析视频过程由manim代码生成。
+    所有要求如下，请给出正确的代码：
                         {prompt_config[number - 1]}
                         可以根据示例manim代码对输入的解题过程进行模板嵌套：
-                        示例manim代码模板：{example_manim}
-
+                        示例流程：{example_manim}
                         数学题目：{problem}
                         解题过程：{solution}请将解题过程中出现的所有函数表达式，在manim代码画图时展示出来
                         
+
+
+
+
+
                         解题过程solution中每一行最多不超过25个字，若超出了25个字，请分段展示
-                        
-                        最后结果只需要在response中展示manim代码即可
-                        
-                        
+
+                        最终结果只需要在response中展示manim代码即可
+
+
+
                 """
+    # prompt = f"""
+    #                         {prompt_config[number - 1]}
+    #                         mathematics question：{problem}
+    #                         Problem Solving Process：{solution}Please display all function expressions that appear in the problem-solving process when drawing the manim code.
+    #                         You can nest templates for the input problem-solving process based on the example manim code:
+    #                         Example manim code template:{example_manim}
+    #
+    #
+    #
+    #
+    #
+    #                         The maximum length of each line in the solution is 25 characters. If it exceeds 25 characters, please display it in sections.
+    #
+    #                         The final result only needs to display the manim code in the response
+    #
+    #
+    #
+    #                 """
 
     # # 调用OpenAI API生成Manim代码
     # response = openai.ChatCompletion.create(
